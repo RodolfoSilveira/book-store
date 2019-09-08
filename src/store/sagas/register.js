@@ -12,9 +12,13 @@ export function* register({payload: {formData}}) {
 
     yield put(RegisterCreators.onSuccess(data));
 
-    AsyncStorage.multiSet([['@token', data.token], ['@user', data.user]]);
+    yield call(
+      AsyncStorage.multiSet,
+      [['@token', data.token.token], ['@user', JSON.stringify(data.user)]],
+      error => console.tron.log(error),
+    );
 
-    NavigationService.navigate('Store');
+    yield call([NavigationService, 'navigate'], 'Store');
   } catch (error) {
     let message;
     switch (error.status) {
@@ -28,7 +32,10 @@ export function* register({payload: {formData}}) {
         message = 'Something went wrong';
     }
 
-    yield put({type: Types.REGISTER_ERROR, payload: message});
+    yield put({
+      type: Types.REGISTER_ERROR,
+      payload: message,
+    });
     AsyncStorage.removeItem('@token');
   }
 }

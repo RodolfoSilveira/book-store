@@ -9,7 +9,7 @@ function Store() {
         <Anuncio />
       </Wrapper>
     </>
-  )
+  );
 }
 
 export default Store;

@@ -12,9 +12,9 @@ export function* authorize({payload: {email, password}}) {
 
     yield put(AuthCreators.onSuccess(data));
 
-    AsyncStorage.multiSet([['@token', data.token]]);
+    yield call([AsyncStorage, 'setItem'], '@token', data.token);
 
-    NavigationService.navigate('Store');
+    yield call([NavigationService, 'navigate'], 'Store');
   } catch (error) {
     let message;
     switch (error.status) {
@@ -30,5 +30,6 @@ export function* authorize({payload: {email, password}}) {
 
     yield put({type: Types.AUTH_ERROR, payload: message});
     AsyncStorage.removeItem('@token');
+    console.tron.log(error);
   }
 }

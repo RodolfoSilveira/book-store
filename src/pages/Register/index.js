@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  StatusBar,
+} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {
   Wrapper,
@@ -95,6 +101,7 @@ function Register(props) {
   return (
     <AndroidBackHandler onBackPress={onBackButtonPressAndroid}>
       <Wallpaper image={stackbook}>
+        <StatusBar backgroundColor="transparent" translucent />
         <Wrapper>
           <TouchableOpacity
             style={styles.selectButton}

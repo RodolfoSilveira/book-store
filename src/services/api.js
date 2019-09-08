@@ -1,13 +1,15 @@
-import axios from 'axios';
+import {create} from 'apisauce';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const api = axios.create({
+const api = create({
   baseURL: 'http://10.0.2.2:3000',
 });
 
-const token = AsyncStorage.getItem('token');
-if (token) {
-  api.defaults.headers.common.Authorization = `Bearer ${token}`;
-}
+api.addAsyncRequestTransform(async request => {
+  const token = await AsyncStorage.getItem('@token');
+  if (token) {
+    request.headers.Authentication = `Bearer ${token}`;
+  }
+});
 
 export default api;

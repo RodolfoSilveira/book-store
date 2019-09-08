@@ -78,7 +78,7 @@ function Anuncio() {
         </AnuncioBox>
       </Wrapper>
     </>
-  )
+  );
 }
 
 export default Anuncio;

@@ -6,10 +6,13 @@ import NavigationService from '../../NavigationService';
 
 function Main() {
   useEffect(() => {
-    const token = AsyncStorage.getItem('@token');
-    if (token) {
-      NavigationService.navigate('Store');
+    async function getToken() {
+      const token = await AsyncStorage.getItem('@token');
+      if (token) {
+        NavigationService.navigate('Store');
+      }
     }
+    getToken();
   }, []);
 
   return (
@@ -17,7 +20,7 @@ function Main() {
       <StatusBar backgroundColor="transparent" translucent />
       <Login />
     </>
-  )
+  );
 }
 
 export default Main;
