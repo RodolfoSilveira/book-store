@@ -12,7 +12,11 @@ export function* authorize({payload: {email, password}}) {
 
     yield put(AuthCreators.onSuccess(data));
 
-    yield call([AsyncStorage, 'setItem'], '@token', data.token);
+    yield call(
+      AsyncStorage.multiSet,
+      [['@token', data.token.token], ['@user', JSON.stringify(data.user)]],
+      error => console.tron.log(error),
+    );
 
     yield call([NavigationService, 'navigate'], 'Store');
   } catch (error) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Wrapper,
   Title,
@@ -9,9 +9,21 @@ import {
   ProductText,
 } from './styles';
 import {Avatar} from 'react-native-elements';
-import {StatusBar} from 'react-native';
+import {StatusBar, FlatList} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 function Perfil() {
+  const [user, setUser] = useState([])
+
+  useEffect(() => {
+    async function getUser() {
+      const response = await AsyncStorage.getItem('@user')
+      console.tron.log(JSON.parse(response))
+      setUser(JSON.parse(response))
+    }
+    getUser()
+  }, [])
+
   return (
     <>
       <Wrapper>
@@ -20,14 +32,14 @@ function Perfil() {
         <ImageArea>
           <Avatar
             source={{
-              uri: 'https://api.adorable.io/avatars/285/abott@adorable.png',
+              uri: user.avatar,
             }}
             rounded
             showEditButton
             size="xlarge"
             activeOpacity={0.7}
           />
-          <Name>Rodolfo Silveira</Name>
+          <Name>{user.username}</Name>
           <Profission>Designer | Desenvolvedor</Profission>
           <Product>148</Product>
           <ProductText>Produtos</ProductText>
